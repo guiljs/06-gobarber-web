@@ -15,10 +15,17 @@ import { Container, Error } from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   icon?: React.ComponentType<IconBaseProps>;
+  containerStyles?: object;
   type?: string;
 }
 
-const Input: React.FC<InputProps> = ({ name, icon: Icon, type, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  name,
+  containerStyles = {},
+  icon: Icon,
+  type,
+  ...rest
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -43,7 +50,12 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, type, ...rest }) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
+    <Container
+      style={containerStyles}
+      isErrored={!!error}
+      isFilled={isFilled}
+      isFocused={isFocused}
+    >
       {Icon && <Icon size={20} />}
       <input
         onFocus={handleInputFocus}
